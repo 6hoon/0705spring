@@ -15,12 +15,15 @@ import lombok.extern.java.Log;
 @Controller
 @RequestMapping("/board")
 public class BoardController {
-	@Autowired
-	// 스프링 컨테이너는 해당 '인터페이스'로 '구현된 객체' 가 있으면 불러와준다!!
-	// ㄴ 따라서 한 인터페이스에서 두개의 구현객체는 있을 수 없는 일이다.
-	private BoardService service; // C,R,U,D,L
 
-	// insert를 하기 위한 입력화면을 요청한다.
+	@Autowired
+	private BoardService service;
+
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public String home(Model model) throws Exception {
+		log.info("home");
+		return "board/home";
+	}
 	@RequestMapping(value = "/registerForm", method = RequestMethod.GET)
 	public String registerForm(Board board, Model model) throws Exception {
 		log.info("registerForm");
@@ -68,9 +71,4 @@ public class BoardController {
 		model.addAttribute("msg", "삭제가 완료되었습니다.");
 		return "board/success";
 	}
-//	@RequestMapping(value = "/home", method = RequestMethod.GET)
-//	public String home() throws Exception {
-//		log.info("/board/home");
-//		return "/board/home";
-//	}
 }
